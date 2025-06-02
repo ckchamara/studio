@@ -47,7 +47,7 @@ export default function GracePeriodCard({ endDate }: GracePeriodCardProps) {
     return (
       <Card className="bg-card border-accent shadow-lg animate-pulse">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-medium text-accent-foreground">Grace Period Reminder</CardTitle>
+          <CardTitle className="text-lg font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
           <ShieldAlert className="h-6 w-6 text-accent" />
         </CardHeader>
         <CardContent>
@@ -63,12 +63,12 @@ export default function GracePeriodCard({ endDate }: GracePeriodCardProps) {
   return (
     <Card className="bg-card border-accent shadow-lg">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium text-accent-foreground">Grace Period Reminder</CardTitle>
+        <CardTitle className="text-lg font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
         <ShieldAlert className="h-6 w-6 text-accent" />
       </CardHeader>
       <CardContent>
         {gracePeriodEnded ? (
-          <p className="text-xl font-bold text-destructive">Your grace period has ended.</p>
+          <p className="text-xl font-bold text-destructive">Your trial period has ended.</p>
         ) : (
           <p className="text-xl">
             You have <span className="font-bold text-accent">{String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span> left.
@@ -81,3 +81,4 @@ export default function GracePeriodCard({ endDate }: GracePeriodCardProps) {
     </Card>
   );
 }
+
