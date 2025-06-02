@@ -16,7 +16,7 @@ export default function HomePage() {
         <div className="flex items-center justify-center mb-3">
           <ShieldCheck className="h-10 w-10 sm:h-12 sm:w-12 text-primary animate-pulse" />
           <h1 className="text-4xl sm:text-5xl font-headline ml-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-            VerifyChain
+            UniStudent
           </h1>
         </div>
         <p className="text-md sm:text-lg text-muted-foreground">
@@ -30,7 +30,7 @@ export default function HomePage() {
       </main>
 
       <footer className="mt-12 text-center text-xs sm:text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} VerifyChain. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} UniStudent. All rights reserved.</p>
         <p>Trust. Security. Verification.</p>
       </footer>
     </div>
