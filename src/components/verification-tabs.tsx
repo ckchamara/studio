@@ -28,13 +28,13 @@ export default function VerificationTabs() {
   const [status, setStatus] = useState<VerificationStatus>('not-verified');
   const [feedback, setFeedback] = useState<FeedbackMessage | null>(null);
   const [activeTab, setActiveTab] = useState<string>("email");
+  const [verificationMethodChosen, setVerificationMethodChosen] = useState<boolean>(false);
+  const [chosenMethod, setChosenMethod] = useState<'email' | 'id' | null>(null);
 
   const handleSetFeedback = (message: FeedbackMessage | null) => {
     setFeedback(message);
     if (message) {
-      // Auto-dismiss feedback after 5 seconds
       setTimeout(() => {
-        // Only clear if the current feedback is the one that triggered the timeout
         setFeedback((currentFeedback) => 
           (currentFeedback && currentFeedback.title === message.title && currentFeedback.text === message.text) ? null : currentFeedback
         );
@@ -42,13 +42,32 @@ export default function VerificationTabs() {
     }
   };
   
+  const handleSetStatusAndChoice = (newStatus: VerificationStatus) => {
+    setStatus(newStatus);
+    if (!verificationMethodChosen) {
+      if (newStatus === 'email-pending') {
+        setVerificationMethodChosen(true);
+        setChosenMethod('email');
+      } else if (newStatus === 'id-pending') {
+        setVerificationMethodChosen(true);
+        setChosenMethod('id');
+      }
+    }
+    
+    if (newStatus === 'not-verified') {
+      setVerificationMethodChosen(false);
+      setChosenMethod(null);
+    }
+  };
+
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    // Optionally clear feedback when changing tabs, or let it persist
-    // setFeedback(null); 
   };
 
   const FeedbackIcon = feedback?.type === 'success' ? CheckCircle2 : AlertCircle;
+
+  const isEmailTabDisabled = verificationMethodChosen && chosenMethod === 'id';
+  const isIdTabDisabled = verificationMethodChosen && chosenMethod === 'email';
 
   return (
     <Card className="w-full shadow-xl border-border/50">
@@ -65,15 +84,35 @@ export default function VerificationTabs() {
         )}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6 bg-secondary/50 p-1 rounded-lg">
-            <TabsTrigger value="email" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md">Verify by Email</TabsTrigger>
-            <TabsTrigger value="id" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md">Upload Student ID</TabsTrigger>
+            <TabsTrigger 
+              value="email" 
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              disabled={isEmailTabDisabled}
+            >
+              Verify by Email
+            </TabsTrigger>
+            <TabsTrigger 
+              value="id" 
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              disabled={isIdTabDisabled}
+            >
+              Upload Student ID
+            </TabsTrigger>
             <TabsTrigger value="status" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md">Check Status</TabsTrigger>
           </TabsList>
           <TabsContent value="email" className="outline-none ring-0 focus-visible:ring-0">
-            <EmailVerificationForm setStatus={setStatus} setFeedback={handleSetFeedback} currentStatus={status} />
+            <EmailVerificationForm 
+              setStatus={handleSetStatusAndChoice} 
+              setFeedback={handleSetFeedback} 
+              currentStatus={status} 
+            />
           </TabsContent>
           <TabsContent value="id" className="outline-none ring-0 focus-visible:ring-0">
-            <IdUploadForm setStatus={setStatus} setFeedback={handleSetFeedback} currentStatus={status} />
+            <IdUploadForm 
+              setStatus={handleSetStatusAndChoice} 
+              setFeedback={handleSetFeedback} 
+              currentStatus={status} 
+            />
           </TabsContent>
           <TabsContent value="status" className="outline-none ring-0 focus-visible:ring-0">
             <StatusDisplay status={status} />
