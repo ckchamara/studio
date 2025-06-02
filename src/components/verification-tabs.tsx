@@ -66,8 +66,15 @@ export default function VerificationTabs() {
 
   const FeedbackIcon = feedback?.type === 'success' ? CheckCircle2 : AlertCircle;
 
-  const isEmailTabDisabled = verificationMethodChosen && chosenMethod === 'id';
-  const isIdTabDisabled = verificationMethodChosen && chosenMethod === 'email';
+  const isUserVerified = status === 'email-verified' || status === 'id-verified';
+
+  const isEmailTabDisabled = 
+    isUserVerified || 
+    (verificationMethodChosen && chosenMethod === 'id');
+  
+  const isIdTabDisabled = 
+    isUserVerified || 
+    (verificationMethodChosen && chosenMethod === 'email');
 
   return (
     <Card className="w-full shadow-xl border-border/50">
