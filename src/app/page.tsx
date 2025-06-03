@@ -100,8 +100,7 @@ export default function HomePage() {
       
       <main className="w-full max-w-2xl space-y-8">
         <GracePeriodCard endDate={gracePeriodEndDate} />
-        <VerificationTabs />
-
+        
         <Card className="w-full shadow-xl border-border/50">
           <CardHeader className="pb-4">
             <CardTitle className="text-2xl text-center font-headline text-primary">Select Your University</CardTitle>
@@ -131,6 +130,8 @@ export default function HomePage() {
             )}
           </CardContent>
         </Card>
+
+        <VerificationTabs />
       </main>
 
       <footer className="mt-12 text-center text-xs sm:text-sm text-muted-foreground">
