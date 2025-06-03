@@ -3,7 +3,7 @@
 
 import GracePeriodCard from '@/components/grace-period-card';
 import VerificationTabs from '@/components/verification-tabs';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, ShieldAlert } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface University {
   value: string;
@@ -79,35 +79,54 @@ const universityData: UniversityGroup[] = [
 
 
 export default function HomePage() {
-  const gracePeriodEndDate = new Date();
-  gracePeriodEndDate.setDate(gracePeriodEndDate.getDate() + 21); 
-
+  const [gracePeriodEndDate, setGracePeriodEndDate] = useState<Date | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<string | undefined>(undefined);
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 21);
+    setGracePeriodEndDate(date);
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-6 sm:py-10 px-4">
-      <header className="mb-6 sm:mb-10 text-center">
-        <div className="flex items-center justify-center mb-2">
-          <ShieldCheck className="h-8 w-8 sm:h-10 sm:w-10 text-primary animate-pulse" />
-          <h1 className="text-3xl sm:text-4xl font-headline ml-2.5 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-4 sm:py-8 px-4">
+      <header className="mb-4 sm:mb-8 text-center">
+        <div className="flex items-center justify-center mb-1.5">
+          <ShieldCheck className="h-6 w-6 sm:h-8 sm:w-8 text-primary animate-pulse" />
+          <h1 className="text-2xl sm:text-3xl font-headline ml-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
             UniStudent
           </h1>
         </div>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Secure &amp; Seamless Student Verification
         </p>
       </header>
       
-      <main className="w-full max-w-xl space-y-6">
-        <GracePeriodCard endDate={gracePeriodEndDate} />
+      <main className="w-full max-w-lg space-y-4">
+        {gracePeriodEndDate ? (
+          <GracePeriodCard endDate={gracePeriodEndDate} />
+        ) : (
+          <Card className="bg-card border-accent shadow-md animate-pulse">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-3">
+              <CardTitle className="text-sm font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
+              <ShieldAlert className="h-4 w-4 text-accent" />
+            </CardHeader>
+            <CardContent className="px-3 pb-2 pt-0.5">
+              <p className="text-base h-5 bg-muted-foreground/20 rounded w-3/4"></p>
+              <p className="text-xs text-muted-foreground mt-0.5 h-3 bg-muted-foreground/10 rounded w-full"></p>
+            </CardContent>
+          </Card>
+        )}
         
-        <Card className="w-full shadow-lg border-border/40">
-          <CardHeader className="pb-3 pt-4">
-            <CardTitle className="text-xl text-center font-headline text-primary">Select Your University</CardTitle>
+        <Card className="w-full shadow-md border-border/40">
+          <CardHeader className="pb-2 pt-3">
+            <CardTitle className="text-base text-center font-headline text-primary">Select Your University</CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-5">
+          <CardContent className="p-3 sm:p-4">
             <Select value={selectedUniversity} onValueChange={setSelectedUniversity}>
-              <SelectTrigger className="w-full text-sm">
+              <SelectTrigger className="w-full text-xs">
                 <SelectValue placeholder="Select your university" />
               </SelectTrigger>
               <SelectContent>
@@ -115,7 +134,7 @@ export default function HomePage() {
                   <SelectGroup key={group.label}>
                     <SelectLabel className="text-xs">{group.label}</SelectLabel>
                     {group.universities.map((uni) => (
-                      <SelectItem key={uni.value} value={uni.value} className="text-sm">
+                      <SelectItem key={uni.value} value={uni.value} className="text-xs">
                         {uni.label}
                       </SelectItem>
                     ))}
@@ -124,7 +143,7 @@ export default function HomePage() {
               </SelectContent>
             </Select>
             {selectedUniversity && (
-              <p className="mt-3 text-xs text-muted-foreground text-center">
+              <p className="mt-2 text-xs text-muted-foreground text-center">
                 You selected: {universityData.flatMap(g => g.universities).find(u => u.value === selectedUniversity)?.label || 'N/A'}
               </p>
             )}
@@ -134,10 +153,12 @@ export default function HomePage() {
         <VerificationTabs />
       </main>
 
-      <footer className="mt-10 text-center text-xs text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} UniStudent. All rights reserved.</p>
+      <footer className="mt-8 text-center text-xs text-muted-foreground">
+        {currentYear && <p>&copy; {currentYear} UniStudent. All rights reserved.</p>}
+        {!currentYear && <p className="h-4 bg-muted-foreground/20 rounded w-1/2 mx-auto mb-1"></p>}
         <p>Trust. Security. Verification.</p>
       </footer>
     </div>
   );
 }
+
