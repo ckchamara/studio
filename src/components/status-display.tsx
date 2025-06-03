@@ -67,15 +67,15 @@ export default function StatusDisplay({ status }: StatusDisplayProps) {
 
   return (
     <div className={cn(
-        "p-6 md:p-8 rounded-xl border transition-all duration-300 ease-in-out",
+        "p-5 md:p-6 rounded-xl border transition-all duration-300 ease-in-out",
         bgColor, 
         borderColor,
-        "shadow-lg hover:shadow-xl"
+        "shadow-md hover:shadow-lg"
       )}>
-      <div className="flex flex-col items-center text-center space-y-3">
-        <Icon className={cn("w-16 h-16 md:w-20 md:h-20 mb-3 opacity-80", color)} />
-        <h3 className={cn("text-xl md:text-2xl font-semibold", color.replace('text-', 'text-'))}>{title}</h3>
-        <p className="text-muted-foreground text-sm md:text-base leading-relaxed">{message}</p>
+      <div className="flex flex-col items-center text-center space-y-2.5">
+        <Icon className={cn("w-12 h-12 md:w-16 md:h-16 mb-2 opacity-80", color)} />
+        <h3 className={cn("text-lg md:text-xl font-semibold", color.replace('text-', 'text-'))}>{title}</h3>
+        <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">{message}</p>
       </div>
     </div>
   );

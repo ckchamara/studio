@@ -64,65 +64,65 @@ export default function IdUploadForm({ setStatus, setFeedback, currentStatus }: 
   
   if (currentStatus === 'email-verified' || currentStatus === 'id-verified') {
     return (
-      <div className="flex flex-col items-center justify-center p-8 text-center bg-secondary rounded-lg shadow-inner">
-        <ShieldCheck className="w-16 h-16 text-green-500 mb-4" />
-        <h3 className="text-xl font-semibold mb-2">Already Verified!</h3>
-        <p className="text-muted-foreground">Your student status is confirmed.</p>
+      <div className="flex flex-col items-center justify-center p-6 text-center bg-secondary rounded-lg shadow-inner">
+        <ShieldCheck className="w-12 h-12 text-green-500 mb-3" />
+        <h3 className="text-lg font-semibold mb-1.5">Already Verified!</h3>
+        <p className="text-xs text-muted-foreground">Your student status is confirmed.</p>
       </div>
     );
   }
 
   if (currentStatus === 'id-pending') {
      return (
-      <div className="flex flex-col items-center justify-center p-8 text-center bg-secondary rounded-lg shadow-inner">
-        <Hourglass className="w-16 h-16 text-primary mb-4 animate-spin" />
-        <h3 className="text-xl font-semibold mb-2">ID Under Review</h3>
-        <p className="text-muted-foreground">Your Student ID is currently being reviewed. This process can take 24-48 hours. We'll notify you once it's complete.</p>
+      <div className="flex flex-col items-center justify-center p-6 text-center bg-secondary rounded-lg shadow-inner">
+        <Hourglass className="w-12 h-12 text-primary mb-3 animate-spin" />
+        <h3 className="text-lg font-semibold mb-1.5">ID Under Review</h3>
+        <p className="text-xs text-muted-foreground">Your Student ID is currently being reviewed. This process can take 24-48 hours. We'll notify you once it's complete.</p>
       </div>
     );   
   }
   
   if (currentStatus === 'id-rejected') {
     return (
-     <div className="flex flex-col items-center justify-center p-8 text-center bg-destructive/10 border border-destructive rounded-lg shadow-inner">
-       <AlertTriangle className="w-16 h-16 text-destructive mb-4" />
-       <h3 className="text-xl font-semibold mb-2 text-destructive">ID Verification Rejected</h3>
-       <p className="text-destructive/90 mb-4">Unfortunately, we couldn't verify your submitted ID. This could be due to an unclear image, expired ID, or mismatched information.</p>
-       <Button onClick={() => { setStatus('not-verified'); setFeedback(null); }} variant="destructive" className="mb-2">Try Uploading Again</Button>
-       <p className="text-sm text-muted-foreground">If issues persist, please contact support.</p>
+     <div className="flex flex-col items-center justify-center p-6 text-center bg-destructive/10 border border-destructive rounded-lg shadow-inner">
+       <AlertTriangle className="w-12 h-12 text-destructive mb-3" />
+       <h3 className="text-lg font-semibold mb-1.5 text-destructive">ID Verification Rejected</h3>
+       <p className="text-destructive/90 text-xs mb-3">Unfortunately, we couldn't verify your submitted ID. This could be due to an unclear image, expired ID, or mismatched information.</p>
+       <Button onClick={() => { setStatus('not-verified'); setFeedback(null); }} variant="destructive" size="sm" className="mb-1.5 text-xs">Try Uploading Again</Button>
+       <p className="text-xs text-muted-foreground">If issues persist, please contact support.</p>
      </div>
    );   
  }
 
   return (
-    <div className="p-2 rounded-lg">
-      <h3 className="text-xl font-semibold mb-4 text-center">Upload Student ID</h3>
-      <p className="text-sm text-muted-foreground mb-6 text-center">
+    <div className="p-1 rounded-lg">
+      <h3 className="text-lg font-semibold mb-3 text-center">Upload Student ID</h3>
+      <p className="text-xs text-muted-foreground mb-5 text-center">
         Upload a clear image or PDF of your valid student ID. Ensure all information is legible.
       </p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
             name="studentIdFile"
             render={({ field: { onChange, value, ...restField } }) => ( // Destructure to handle FileList
               <FormItem>
-                <FormLabel>Student ID (Image or PDF)</FormLabel>
+                <FormLabel className="text-sm">Student ID (Image or PDF)</FormLabel>
                 <FormControl>
                   <Input 
                     type="file" 
                     accept={ACCEPTED_IMAGE_TYPES.join(",")}
                     onChange={(e) => onChange(e.target.files)} // Pass FileList to RHF
                     {...restField}
-                    className="bg-input file:text-accent-foreground file:font-medium file:mr-4 file:py-2 file:px-4 file:rounded-l-md file:border-0 hover:file:bg-accent/10"
+                    className="bg-input file:text-accent-foreground file:font-medium file:mr-3 file:py-1.5 file:px-3 file:rounded-l-md file:border-0 hover:file:bg-accent/10 text-sm"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs"/>
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3" disabled={isLoading}>
-            {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Uploading...</> : <><UploadCloud className="mr-2 h-4 w-4" /> Upload ID for Review</>}
+          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-2.5 text-sm" disabled={isLoading} size="sm">
+            {isLoading ? <><Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> Uploading...</> : <><UploadCloud className="mr-1.5 h-3.5 w-3.5" /> Upload ID for Review</>}
           </Button>
         </form>
       </Form>

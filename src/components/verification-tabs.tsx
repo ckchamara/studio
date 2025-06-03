@@ -54,7 +54,7 @@ export default function VerificationTabs() {
       }
     }
     
-    if (newStatus === 'not-verified') {
+    if (newStatus === 'not-verified') { // Reset choice if status goes back to not-verified
       setVerificationMethodChosen(false);
       setChosenMethod(null);
     }
@@ -76,36 +76,37 @@ export default function VerificationTabs() {
     isUserVerified || 
     (verificationMethodChosen && chosenMethod === 'email');
 
+
   return (
-    <Card className="w-full shadow-xl border-border/50">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-2xl text-center font-headline text-primary">Verification Center</CardTitle>
+    <Card className="w-full shadow-lg border-border/40">
+      <CardHeader className="pb-3 pt-4">
+        <CardTitle className="text-xl text-center font-headline text-primary">Verification Center</CardTitle>
       </CardHeader>
-      <CardContent className="p-4 sm:p-6">
+      <CardContent className="p-4 sm:p-5">
         {feedback && (
-          <Alert variant={feedback.type === 'error' ? 'destructive' : 'default'} className="mb-6 shadow-md">
-            <FeedbackIcon className="h-5 w-5" />
-            <AlertTitle className="font-semibold">{feedback.title}</AlertTitle>
-            <AlertDescription>{feedback.text}</AlertDescription>
+          <Alert variant={feedback.type === 'error' ? 'destructive' : 'default'} className="mb-4 shadow-sm p-3">
+            <FeedbackIcon className="h-4 w-4" />
+            <AlertTitle className="font-semibold text-sm">{feedback.title}</AlertTitle>
+            <AlertDescription className="text-xs">{feedback.text}</AlertDescription>
           </Alert>
         )}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6 bg-secondary/50 p-1 rounded-lg">
+          <TabsList className="grid w-full grid-cols-3 mb-5 bg-secondary/50 p-0.5 rounded-md">
             <TabsTrigger 
               value="email" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm py-1.5 text-xs sm:text-sm"
               disabled={isEmailTabDisabled}
             >
               Verify by Email
             </TabsTrigger>
             <TabsTrigger 
               value="id" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm py-1.5 text-xs sm:text-sm"
               disabled={isIdTabDisabled}
             >
               Upload Student ID
             </TabsTrigger>
-            <TabsTrigger value="status" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md">Check Status</TabsTrigger>
+            <TabsTrigger value="status" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm py-1.5 text-xs sm:text-sm">Check Status</TabsTrigger>
           </TabsList>
           <TabsContent value="email" className="outline-none ring-0 focus-visible:ring-0">
             <EmailVerificationForm 

@@ -85,37 +85,37 @@ export default function HomePage() {
   const [selectedUniversity, setSelectedUniversity] = useState<string | undefined>(undefined);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-8 sm:py-12 px-4">
-      <header className="mb-8 sm:mb-12 text-center">
-        <div className="flex items-center justify-center mb-3">
-          <ShieldCheck className="h-10 w-10 sm:h-12 sm:w-12 text-primary animate-pulse" />
-          <h1 className="text-4xl sm:text-5xl font-headline ml-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-6 sm:py-10 px-4">
+      <header className="mb-6 sm:mb-10 text-center">
+        <div className="flex items-center justify-center mb-2">
+          <ShieldCheck className="h-8 w-8 sm:h-10 sm:w-10 text-primary animate-pulse" />
+          <h1 className="text-3xl sm:text-4xl font-headline ml-2.5 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
             UniStudent
           </h1>
         </div>
-        <p className="text-md sm:text-lg text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground">
           Secure &amp; Seamless Student Verification
         </p>
       </header>
       
-      <main className="w-full max-w-2xl space-y-8">
+      <main className="w-full max-w-xl space-y-6">
         <GracePeriodCard endDate={gracePeriodEndDate} />
         
-        <Card className="w-full shadow-xl border-border/50">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-2xl text-center font-headline text-primary">Select Your University</CardTitle>
+        <Card className="w-full shadow-lg border-border/40">
+          <CardHeader className="pb-3 pt-4">
+            <CardTitle className="text-xl text-center font-headline text-primary">Select Your University</CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-6">
+          <CardContent className="p-4 sm:p-5">
             <Select value={selectedUniversity} onValueChange={setSelectedUniversity}>
-              <SelectTrigger className="w-full text-base md:text-sm">
+              <SelectTrigger className="w-full text-sm">
                 <SelectValue placeholder="Select your university" />
               </SelectTrigger>
               <SelectContent>
                 {universityData.map((group) => (
                   <SelectGroup key={group.label}>
-                    <SelectLabel>{group.label}</SelectLabel>
+                    <SelectLabel className="text-xs">{group.label}</SelectLabel>
                     {group.universities.map((uni) => (
-                      <SelectItem key={uni.value} value={uni.value}>
+                      <SelectItem key={uni.value} value={uni.value} className="text-sm">
                         {uni.label}
                       </SelectItem>
                     ))}
@@ -124,7 +124,7 @@ export default function HomePage() {
               </SelectContent>
             </Select>
             {selectedUniversity && (
-              <p className="mt-4 text-sm text-muted-foreground text-center">
+              <p className="mt-3 text-xs text-muted-foreground text-center">
                 You selected: {universityData.flatMap(g => g.universities).find(u => u.value === selectedUniversity)?.label || 'N/A'}
               </p>
             )}
@@ -134,7 +134,7 @@ export default function HomePage() {
         <VerificationTabs />
       </main>
 
-      <footer className="mt-12 text-center text-xs sm:text-sm text-muted-foreground">
+      <footer className="mt-10 text-center text-xs text-muted-foreground">
         <p>&copy; {new Date().getFullYear()} UniStudent. All rights reserved.</p>
         <p>Trust. Security. Verification.</p>
       </footer>

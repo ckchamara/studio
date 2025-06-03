@@ -45,14 +45,14 @@ export default function GracePeriodCard({ endDate }: GracePeriodCardProps) {
   if (!hasMounted) {
     // Render placeholder or null during SSR to avoid hydration mismatch
     return (
-      <Card className="bg-card border-accent shadow-lg animate-pulse">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
-          <ShieldAlert className="h-6 w-6 text-accent" />
+      <Card className="bg-card border-accent shadow-md animate-pulse">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 pt-3 px-4">
+          <CardTitle className="text-base font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
+          <ShieldAlert className="h-5 w-5 text-accent" />
         </CardHeader>
-        <CardContent>
-          <p className="text-xl h-6 bg-muted-foreground/20 rounded w-3/4"></p>
-          <p className="text-sm text-muted-foreground mt-1 h-4 bg-muted-foreground/10 rounded w-full"></p>
+        <CardContent className="px-4 pb-3 pt-1">
+          <p className="text-lg h-5 bg-muted-foreground/20 rounded w-3/4"></p>
+          <p className="text-xs text-muted-foreground mt-1 h-3 bg-muted-foreground/10 rounded w-full"></p>
         </CardContent>
       </Card>
     );
@@ -61,24 +61,23 @@ export default function GracePeriodCard({ endDate }: GracePeriodCardProps) {
   const gracePeriodEnded = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 && new Date() >= endDate;
 
   return (
-    <Card className="bg-card border-accent shadow-lg">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
-        <ShieldAlert className="h-6 w-6 text-accent" />
+    <Card className="bg-card border-accent shadow-md">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 pt-3 px-4">
+        <CardTitle className="text-base font-medium text-accent-foreground">Trial Period Reminder</CardTitle>
+        <ShieldAlert className="h-5 w-5 text-accent" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-3 pt-1">
         {gracePeriodEnded ? (
-          <p className="text-xl font-bold text-destructive">Your trial period has ended.</p>
+          <p className="text-lg font-bold text-destructive">Your trial period has ended.</p>
         ) : (
-          <p className="text-xl">
+          <p className="text-lg">
             You have <span className="font-bold text-accent">{String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span> left.
           </p>
         )}
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-xs text-muted-foreground mt-1">
           Please verify your student status to continue accessing services.
         </p>
       </CardContent>
     </Card>
   );
 }
-
